@@ -51,7 +51,7 @@ class MyThemeData {
     scaffoldBackgroundColor: mainBackgroundColor,
     colorScheme: ColorScheme(
       primary: SecendColor,
-      onPrimary: Colors.white,
+      onPrimary: Colors.black,
       secondary: GreenColor,
       onSecondary: Colors.white,
       error: Colors.red,
