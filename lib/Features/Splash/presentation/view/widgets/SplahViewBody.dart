@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../../constant.dart';
-import '../../../../home/presentation/view/widgets/home.dart';
+import '../../../../home/presentation/view/HomeView.dart';
 import 'SlidingText.dart';
 
 class SplahViewBody extends StatefulWidget {
@@ -38,6 +38,7 @@ class _SplahViewBodyState extends State<SplahViewBody>
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // Image.asset(AssetsData.logo),
         SvgPicture.asset(
           AssetsData.logo,
           width: 75,
@@ -59,7 +60,7 @@ class _SplahViewBodyState extends State<SplahViewBody>
   }
   void navigateToHome(){
     Future.delayed(Duration(seconds: 2), (){
-      Get.to(()=>Home(),transition: Transition.fade,duration: kTranstionDuration);
+      Get.to(()=>HomeView(),transition: Transition.fade,duration: kTranstionDuration);
     });
   }
 }
