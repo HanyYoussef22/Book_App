@@ -1,7 +1,11 @@
 import 'package:book_app/core/utils/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
+import '../../../../../constant.dart';
+import '../../../../home/presentation/view/widgets/home.dart';
 import 'SlidingText.dart';
 
 class SplahViewBody extends StatefulWidget {
@@ -19,12 +23,10 @@ class _SplahViewBodyState extends State<SplahViewBody>
   @override
   void initState() {
     super.initState();
-    animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 3));
-    slidingAnimation=Tween<Offset>(begin:const Offset(0,3) ,end: Offset.zero).animate(animationController);
-    animationController.forward();
-
+    initSlidingAnimation();
+    navigateToHome();
   }
+
   @override
   void dispose() {
     animationController.dispose();
@@ -48,6 +50,17 @@ class _SplahViewBodyState extends State<SplahViewBody>
         SlidingText(slidingAnimation: slidingAnimation,)
       ],
     );
+  }
+  void initSlidingAnimation(){
+    animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 3));
+    slidingAnimation=Tween<Offset>(begin:const Offset(0,3) ,end: Offset.zero).animate(animationController);
+    animationController.forward();
+  }
+  void navigateToHome(){
+    Future.delayed(Duration(seconds: 2), (){
+      Get.to(()=>Home(),transition: Transition.fade,duration: kTranstionDuration);
+    });
   }
 }
 
