@@ -1,5 +1,7 @@
+import 'package:book_app/core/utils/appRouter.dart';
 import 'package:flutter/material.dart';
-import '../../../../../core/utils/styles.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../../core/utils/styles.dart';
 import 'ItemBestSeller.dart';
 import 'customAppBar.dart';
 import 'featherListView.dart';
@@ -49,20 +51,25 @@ class BestSellerListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15.0),
-      child: ListView.builder(
-        // shrinkWrap: true,//rebiled widget
-        physics: const NeverScrollableScrollPhysics(),
-        padding:EdgeInsets.zero ,
-          itemCount: 10,
-          itemBuilder: (context,index)
-      {
-        return const Padding(
-          padding: EdgeInsets.only(top: 20),
-          child: ItemBustSeller(),
-        );
-      }),
+    return GestureDetector(
+      onTap: (){
+        GoRouter.of(context).push(AppRouter.kBookDetiles);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15.0),
+        child: ListView.builder(
+          // shrinkWrap: true,//rebiled widget
+          physics: const NeverScrollableScrollPhysics(),
+          padding:EdgeInsets.zero ,
+            itemCount: 10,
+            itemBuilder: (context,index)
+        {
+          return const Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: ItemBustSeller(),
+          );
+        }),
+      ),
     );
   }
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../../../core/utils/assets.dart';
-import '../../../../../core/utils/styles.dart';
+import '../../../../../../core/utils/assets.dart';
+import '../../../../../../core/utils/styles.dart';
+
+
 
 class ItemBustSeller extends StatelessWidget {
   const ItemBustSeller({super.key});
@@ -83,7 +85,7 @@ class RateWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return const Row(mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(FontAwesomeIcons.solidStar,color: Colors.yellow,size: 16,),
         SizedBox(

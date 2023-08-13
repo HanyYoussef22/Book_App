@@ -1,8 +1,9 @@
+import 'package:book_app/core/utils/appRouter.dart';
 import 'package:book_app/core/utils/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:go_router/go_router.dart';
+
 
 import '../../../../../constant.dart';
 import '../../../../home/presentation/view/HomeView.dart';
@@ -60,7 +61,7 @@ class _SplahViewBodyState extends State<SplahViewBody>
   }
   void navigateToHome(){
     Future.delayed(Duration(seconds: 2), (){
-      Get.to(()=>HomeView(),transition: Transition.fade,duration: kTranstionDuration);
+      GoRouter.of(context).push(AppRouter.kHomeScreen);
     });
   }
 }
