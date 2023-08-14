@@ -36,7 +36,6 @@ abstract class Styles {
   static const titleStyle14 = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.normal,
-    color: Color(0xff707070),
   );
   static const titleStyle14N = TextStyle(
     fontSize: 14,

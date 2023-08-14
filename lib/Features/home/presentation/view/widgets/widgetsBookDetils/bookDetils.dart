@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/utils/styles.dart';
+import '../../../../../../core/utils/widget/customButton.dart';
 import '../../../../../../shard/styles/clors.dart';
 import '../widgetsHomeView/ItemBestSeller.dart';
 import '../widgetsHomeView/customListView.dart';
 import '../widgetsHomeView/featherListView.dart';
+import 'Similerlistview.dart';
 import 'customAppBar.dart';
 
 class BookDetilsBody extends StatelessWidget {
@@ -18,7 +20,7 @@ class BookDetilsBody extends StatelessWidget {
       padding:
           EdgeInsets.only(left: mediaHidth * 0.044, right: mediaHidth * 0.044),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+
         children: [
           const CustomAppBar(),
           Padding(
@@ -29,25 +31,21 @@ class BookDetilsBody extends StatelessWidget {
           SizedBox(
             height: mediaHidth * 0.035,
           ),
-          Center(
-            child: Text(
-              'The Jungle Book',
-              style: Styles.titleStyle30.copyWith(
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.normal,
-              ),
+          Text(
+            'The Jungle Book',
+            style: Styles.titleStyle30.copyWith(
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.normal,
             ),
           ),
           SizedBox(
             height: mediaHidth * 0.008,
           ),
-          Center(
-            child: Text('Rudyard Kipling',
-                style: Styles.titleStyle18.copyWith(
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.w200,
-                    color: Colors.grey)),
-          ),
+          Text('Rudyard Kipling',
+              style: Styles.titleStyle18.copyWith(
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w200,
+                  color: Colors.grey)),
           SizedBox(
             height: mediaHidth * 0.018,
           ),
@@ -55,24 +53,62 @@ class BookDetilsBody extends StatelessWidget {
           SizedBox(
             height: mediaHidth * 0.035,
           ),
-          const PriceContiner(),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0,left: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: CustomButton(
+                      backgroundColor: WhiteColor,
+                      text: "19.99 €",
+                      textColor: Colors.black,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        bottomLeft: Radius.circular(15),)),
+                ),Expanded(
+                  child: CustomButton(
+                      backgroundColor: OrangeColor,
+                      text: "Free preview",
+                      textColor: WhiteColor,
+                      borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(15),
+                        topRight: Radius.circular(15),)),
+                ),
+              ],
+            ),
+          ),
+
           SizedBox(
             height: mediaHidth * 0.03,
           ),
-          const Text(
-            'You can also like',
-            style: Styles.titleStyle14N,
-            textAlign: TextAlign.start,
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'You can also like',
+              style: Styles.titleStyle14N,
+              textAlign: TextAlign.start,
+            ),
           ),
           SizedBox(
             height: mediaHidth * 0.009,
           ),
-          SizedBox(height: mediaHidth * 0.18, child: FeaturedBooksListView())
+          SizedBox(height: mediaHidth * 0.18, child: const SimilarBooksListView())
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 class PriceContiner extends StatelessWidget {
   const PriceContiner({super.key});

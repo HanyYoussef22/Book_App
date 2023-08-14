@@ -13,14 +13,14 @@ class CustomListViewItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 10.0),
       child: AspectRatio(
-        aspectRatio: 2.7 / 4,
+        aspectRatio: 2.6 / 4,
         child: Container(
           height: mediaHeight * 0.25,
           width: mediaWidth * 0.15,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: Colors.amberAccent,
-            image: DecorationImage(
+            color: Colors.grey,
+            image: const DecorationImage(
               image: AssetImage(AssetsData.test2),
               fit: BoxFit.fill,
             ),

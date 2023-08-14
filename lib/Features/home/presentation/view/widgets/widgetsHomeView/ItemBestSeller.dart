@@ -85,9 +85,9 @@ class RateWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(mainAxisAlignment: MainAxisAlignment.center,
+    return  const Row(mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(FontAwesomeIcons.solidStar,color: Colors.yellow,size: 16,),
+        Icon(FontAwesomeIcons.solidStar,color: Colors.yellow,size: 17,),
         SizedBox(
           width: 6.3,
         ),
@@ -98,9 +98,12 @@ class RateWidgets extends StatelessWidget {
         SizedBox(
           width: 6.3,
         ),
-        Text(
-          "(2390)",
-          style: Styles.titleStyle14,
+        Opacity(
+          opacity: 0.6,
+          child: Text(
+            "(2390)",
+            style: Styles.titleStyle14,
+          ),
         ),
 
       ],
