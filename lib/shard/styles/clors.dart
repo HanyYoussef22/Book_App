@@ -8,5 +8,5 @@ Color WhiteColor = Color(0xFFFFFFFF);
 Color OrangeColor = Color(0xFFEF8262);
 Color GreyColor = Colors.grey;
 
-Color SecendColor = Color(0xFF141922);
+Color SecendColor = Color(0xFF1B152E);
 const Color mainBackgroundColorDark = Color(0xFF060E1E);
