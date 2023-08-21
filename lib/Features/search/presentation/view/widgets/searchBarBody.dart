@@ -1,9 +1,9 @@
+import 'package:book_app/Features/search/presentation/view/widgets/textFildSearch.dart';
 import 'package:book_app/shard/styles/clors.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../../core/utils/assets.dart';
-import '../../../../../model/Book_model.dart';
+import '../../../../home/data/model/Book_model.dart';
 
 class SearchBarBody extends StatefulWidget {
   const SearchBarBody({super.key});
@@ -48,97 +48,79 @@ class _SearchBarBodyState extends State<SearchBarBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-           TextFieldSearchBar(onChanged:updateLise ),
-          SizedBox(
-            height: 10,
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Column(
+            children: [
+               TextFieldSearchBar(onChanged:updateLise ),
+              SizedBox(
+                height: 10,
+              ),
+
+            ],
           ),
-          Expanded(
-            child: Display_List.isEmpty ?  Center(
-              child: Text('No matching books found.'),
-            ) : ListView.builder(
-              itemCount: Display_List.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 4,
-                  color: SecendColor,
-                  borderOnForeground: true,
-                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(16), // Add padding to ListTile content
-                    leading: Image.asset(
-                      Display_List[index].bookTitleUrl,
-                      width: 60,
-                      height: 80,
-                      fit: BoxFit.cover,
-                    ),
-                    title: Text(
-                      Display_List[index].bookTitle,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 4),
-                        Text(
-                          'Rate: ${Display_List[index].rate.toString()}',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          'Author: John Doe', // Replace with actual author info
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.favorite_border),
-                      onPressed: () {
-                        // Add your favorite button functionality here
-                      },
-                    ),
-                    onTap: () {
-                      // Add your onTap functionality here
+        ),
+        SliverFillRemaining(
+          child: Display_List.isEmpty ?  Center(
+            child: Text('No matching books found.'),
+          ) : ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: Display_List.length,
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 4,
+                color: SecendColor,
+                borderOnForeground: true,
+                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                child: ListTile(
+                  contentPadding: EdgeInsets.all(16), // Add padding to ListTile content
+                  leading: Image.asset(
+                    Display_List[index].bookTitleUrl,
+                    width: 60,
+                    height: 80,
+                    fit: BoxFit.cover,
+                  ),
+                  title: Text(
+                    Display_List[index].bookTitle,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 4),
+                      Text(
+                        'Rate: ${Display_List[index].rate.toString()}',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        'Author: John Doe', // Replace with actual author info
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.favorite_border),
+                    onPressed: () {
+                      // Add your favorite button functionality here
                     },
                   ),
-                );
-              },
-            ),
-
+                  onTap: () {
+                    // Add your onTap functionality here
+                  },
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        )
 
+      ],
     );
   }
 }
 
-class TextFieldSearchBar extends StatelessWidget {
-  final ValueChanged<String> onChanged;
 
- const TextFieldSearchBar({super.key, required this.onChanged});
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      onChanged: onChanged,
-      decoration: InputDecoration(
-          fillColor: SecendColor,
-          filled: true,
-          enabledBorder: const OutlineInputBorder(),
-          focusedBorder: const OutlineInputBorder(),
-          hintText: 'Search',
-          suffixIcon: Opacity(
-              opacity: 0.7,
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(FontAwesomeIcons.magnifyingGlass),
-              ))),
-    );
-  }
-}
 
 OutlineInputBorder BuildOutlineInputBorder() {
   return OutlineInputBorder(
