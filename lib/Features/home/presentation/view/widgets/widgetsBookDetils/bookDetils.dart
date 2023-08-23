@@ -52,7 +52,7 @@ class BookDetilsSection extends StatelessWidget {
       children: [ Padding(
         padding: EdgeInsets.symmetric(
             horizontal: mediaWidth * 0.24, vertical: mediaHidth * .008),
-        child:  CustomListViewItem(),
+        child:  ListViewItem(),
       ),
         SizedBox(
           height: mediaHidth * 0.035,

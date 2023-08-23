@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../../../core/utils/assets.dart';
 
 class CustomListViewItem extends StatelessWidget {
-  const CustomListViewItem({Key? key}) : super(key: key);
+  String imagrUrl;
+   CustomListViewItem({Key? key,required this.imagrUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class CustomListViewItem extends StatelessWidget {
     var mediaWidth = MediaQuery.of(context).size.width;
 
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0),
+      padding:  EdgeInsets.only(left: 10.0),
       child: AspectRatio(
         aspectRatio: 2.6 / 4,
         child: Container(
@@ -20,8 +21,8 @@ class CustomListViewItem extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: Colors.grey,
-            image: const DecorationImage(
-              image: AssetImage(AssetsData.test2),
+            image:  DecorationImage(
+              image: NetworkImage(imagrUrl),
               fit: BoxFit.fill,
             ),
           ),
