@@ -1,131 +1,91 @@
+import 'package:book_app/Features/home/data/model/Book_model.dart';
 import 'package:book_app/Features/search/presentation/view/widgets/textFildSearch.dart';
-import 'package:book_app/shard/styles/clors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:book_app/Features/home/data/model/book_model/book_model.dart';
+import 'package:book_app/Features/home/presentation/view/widgets/widgetsHomeView/ItemBestSeller.dart';
+import 'package:book_app/Features/home/presentation/view/loading/loading.dart';
+import 'package:book_app/Features/home/presentation/view_model/CubitFeaturedBooks/featured_books_cubit.dart';
 
-import '../../../../../core/utils/assets.dart';
-import '../../../../home/data/model/Book_model.dart';
+import '../../../../home/presentation/view/widgets/widgetsHomeView/customListView.dart';
 
 class SearchBarBody extends StatefulWidget {
-  const SearchBarBody({super.key});
+  const SearchBarBody({Key? key}) : super(key: key);
 
   @override
   State<SearchBarBody> createState() => _SearchBarBodyState();
 }
 
 class _SearchBarBodyState extends State<SearchBarBody> {
-  static List<BookModel> Book_Main_List = [
-    BookModel(rate: 4.5, bookTitle: 'The Great Gatsby', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'To Kill a Mockingbird', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: '1984', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'The Catcher in the Rye', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'Pride and Prejudice', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'Harry Potter and the Sorcerer\'s Stone', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'The Lord of the Rings', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'Animal Farm', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'Brave New World', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'Fahrenheit 451', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'The Hobbit', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'The Great Gatsby', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'To Kill a Mockingbird', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: '1984', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'The Catcher in the Rye', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'Pride and Prejudice', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'Harry Potter and the Sorcerer\'s Stone', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'The Lord of the Rings', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'Animal Farm', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'Brave New World', bookTitleUrl: AssetsData.test2),
-    BookModel(rate: 4.5, bookTitle: 'Fahrenheit 451', bookTitleUrl: AssetsData.test2),
-  ];
+  late FeaturedBooksCubit _featuredBooksCubit;
 
-  List<BookModel>Display_List=List.from(Book_Main_List);
+  // List to display search results
+  List<ModelBook> displayList = [];
+  List<ModelBook> mainList = [];
 
-  void updateLise(String value) {
+
+  // Method to update the displayList based on search query
+  void updateList(String query) {
     setState(() {
-      Display_List= Book_Main_List.where((element) => element.bookTitle!.toLowerCase().contains(value.toLowerCase())).toList();
+      _featuredBooksCubit = BlocProvider.of<FeaturedBooksCubit>(context);
+      _featuredBooksCubit.getFeatureBooks(category: 'Computer science');
+      mainList.addAll(_featuredBooksCubit.books);
+      _featuredBooksCubit.getFeatureBooks(category: 'Medical');
+      mainList.addAll(_featuredBooksCubit.books);
+      _featuredBooksCubit.getFeatureBooks(category: 'earth');
+      mainList.addAll(_featuredBooksCubit.books);
+      _featuredBooksCubit.getFeatureBooks(category: 'science');
+      mainList.addAll(_featuredBooksCubit.books);
+      _featuredBooksCubit.getFeatureBooks(category: 'Football');
+      mainList.addAll(_featuredBooksCubit.books);
 
+      displayList = mainList
+          .where((book) =>
+              book.volumeInfo.title!
+                  .toLowerCase()
+                  .contains(query.toLowerCase()) )
+          .toList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: Column(
-            children: [
-               TextFieldSearchBar(onChanged:updateLise ),
-              SizedBox(
-                height: 10,
-              ),
+    return Column(
+      children: [
+        TextFieldSearchBar(onChanged: updateList),
 
-            ],
-          ),
-        ),
-        SliverFillRemaining(
-          child: Display_List.isEmpty ?  Center(
-            child: Text('No matching books found.'),
-          ) : ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: Display_List.length,
-            itemBuilder: (context, index) {
-              return Card(
-                elevation: 4,
-                color: SecendColor,
-                borderOnForeground: true,
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                child: ListTile(
-                  contentPadding: EdgeInsets.all(16), // Add padding to ListTile content
-                  leading: Image.asset(
-                    Display_List[index].bookTitleUrl,
-                    width: 60,
-                    height: 80,
-                    fit: BoxFit.cover,
-                  ),
-                  title: Text(
-                    Display_List[index].bookTitle,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 4),
-                      Text(
-                        'Rate: ${Display_List[index].rate.toString()}',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        'Author: John Doe', // Replace with actual author info
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.favorite_border),
-                    onPressed: () {
-                      // Add your favorite button functionality here
+    Expanded(
+      child: BlocBuilder<FeaturedBooksCubit, FeaturedBooksState>(
+              builder: (context, state) {
+                if (state is FeaturedBooksSuccess) {
+                  return displayList.isEmpty
+                      ? Center(
+                    child: Text('No matching books found.'),
+                  )
+                      :ListView.builder(
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    itemCount: displayList.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: ItemBustSeller(books: displayList[index]),
+                      );
                     },
-                  ),
-                  onTap: () {
-                    // Add your onTap functionality here
-                  },
-                ),
-              );
-            },
-          ),
-        )
+                  );
+                }
+                else if (state is FeaturedBooksFailure) {
+                  return Center(child: Text(state.errMAssage));
+                }
+                else{
+                  return const Center(child: NewsCardSkelton());
+                }
+              },
+            ),
 
+        ),
       ],
     );
   }
-}
-
-
-
-OutlineInputBorder BuildOutlineInputBorder() {
-  return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide(
-        color: WhiteColor,
-      ));
 }

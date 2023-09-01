@@ -1,53 +1,56 @@
 import 'package:dio/dio.dart';
 
 abstract class Failure {
-  final String errMsg;
+  final String errorMessage;
 
-  Failure(this.errMsg);
+  Failure(this.errorMessage);
 }
 
 class ServerFailure extends Failure {
-  ServerFailure(String errMsg) : super(errMsg);
+  ServerFailure(super.errorMessage);
 
-  factory ServerFailure.fromDioError(DioError dioError) {
-    String errorMsg = "An error occurred";
-
+  factory ServerFailure.formDioException(DioException dioError) {
     switch (dioError.type) {
-      case DioErrorType.connectionTimeout:
-        errorMsg = "Connection timeout";
-        break;
-      case DioErrorType.sendTimeout:
-        errorMsg = "Send request timeout";
-        break;
-      case DioErrorType.receiveTimeout:
-        errorMsg = "Receive response timeout";
-        break;
-      case DioErrorType.badResponse:
-        return ServerFailure.fromResponse(dioError.response!.statusCode!.toInt(), dioError.response?.data);
-      case DioErrorType.cancel:
-        errorMsg = "Request was cancelled";
-        break;
-      case DioErrorType.badCertificate:
-        errorMsg = "An error occurred";
-        break;
+      case DioExceptionType.connectionTimeout:
+        return ServerFailure('Connection time out from APIService');
+      case DioExceptionType.sendTimeout:
+        return ServerFailure('Send time out from APIService');
+      case DioExceptionType.receiveTimeout:
+        return ServerFailure('Receive time out from APIService');
+      case DioExceptionType.badResponse:
+        return ServerFailure.fromResponse(dioError.response!.statusCode!, dioError.response!.data);
+      case DioExceptionType.cancel:
+        return ServerFailure('Request to ApiServer was canceled');
+      case DioExceptionType.connectionError:
+        if(dioError.message!.contains('SocketException'))
+        {
+          return ServerFailure('No internet connection');
+        }
+        return ServerFailure('Unexpected Error, try again');
+
       default:
-        errorMsg = "Opps There was an Error , Pleas try again";
+        return ServerFailure('Oops there was an Error, Pls try again later');
     }
 
-    return ServerFailure(errorMsg);
   }
-  factory ServerFailure.fromResponse(int statusCode, dynamic response) {
-    String errorMsg = "An error occurred";
 
-    if (statusCode == 404) {
-      errorMsg = "Not found";
-    } else if (statusCode == 500) {
-      errorMsg = "Internal server error";
-    } else if (statusCode >= 400 && statusCode < 600) {
-      // errorMsg = "Response error: $statusCode";
-      ServerFailure(response ['error']['message']);
+  factory ServerFailure.fromResponse(int statusCode, dynamic response)
+  {
+    if(statusCode == 400 || statusCode == 401 || statusCode == 403)
+    {
+      return ServerFailure(response['error']['message']);
     }
-
-    return ServerFailure(errorMsg);
+    else if(statusCode == 404)
+    {
+      return ServerFailure('Your request not found, Pls try again later');
+    }
+    else if(statusCode == 500)
+    {
+      return ServerFailure('Internal server error, Pls try again later');
+    }
+    else
+    {
+      return ServerFailure('Oops there was an Error, Pls try again later');
+    }
   }
 }

@@ -13,12 +13,12 @@ class NewsBookCubit extends Cubit<NewsBookState> {
 final HomeRepo homeRepo;
 
   List<ModelBook>books =[];
-  Future<void> getFeatureBooks() async {
+  Future<void> getBestSellerBooks({required String category}) async {
     emit(FeaturedBooksLoading());
-    final result = await homeRepo.featchBestSellerBooks();
+    final result = await homeRepo.featchBestSellerBooks(category: category);
     result.fold(
           (failure) {
-        NewsBookFailure(failure.errMsg);
+        NewsBookFailure(failure.errorMessage);
       },
           (books) {
         this.books=books;

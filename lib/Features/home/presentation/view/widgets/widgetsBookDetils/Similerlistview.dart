@@ -1,7 +1,12 @@
 
+import 'package:book_app/Features/home/presentation/view_model/CubitSimulir/similar_books_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../../../core/utils/appRouter.dart';
 import '../../../../../../core/utils/assets.dart';
+import '../../loading/loading.dart';
 import '../widgetsHomeView/customListView.dart';
 
 class SimilarBooksListView extends StatelessWidget {
@@ -11,43 +16,31 @@ class SimilarBooksListView extends StatelessWidget {
   Widget build(BuildContext context) {var MediaHight=MediaQuery.of(context).size.height;
   return SizedBox(
     height: MediaHight*0.3,
-    child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context,index){
-          return  ListViewItem();
-        }),
+    child: BlocBuilder<SimilarBooksCubit, SimilarBooksState>(
+  builder: (context, state) {
+   if(state is SimilarBooksSuccess){
+     return ListView.builder(
+       physics: BouncingScrollPhysics(),
+       itemCount: state.books.length,
+         scrollDirection: Axis.horizontal,
+         itemBuilder: (context,index){
+           String imageUrl = state.books[index].volumeInfo.imageLinks?.thumbnail ?? '';
+           return  GestureDetector(
+             onTap: (){
+               GoRouter.of(context).push(AppRouter.kBookDetiles ,extra:  state.books[index] );
+               },
+               child: CustomListViewImage(imagrUrl: imageUrl));
+         });
+   } else if (state is SimilarBooksFailure) {
+     return Center(child: Text(state.errMAssage)); // Show an error message
+   } else {
+     return Center(child: NewsCardSkeltonListHorzentil());
+
+   }
+  },
+),
   );
   }
 }
 
 
-
-class ListViewItem extends StatelessWidget {
-  // List <ModelBookbooks;
-  ListViewItem({Key? key,}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var mediaHeight = MediaQuery.of(context).size.height;
-    var mediaWidth = MediaQuery.of(context).size.width;
-
-    return Padding(
-      padding: const EdgeInsets.only(left: 10.0),
-      child: AspectRatio(
-        aspectRatio: 2.6 / 4,
-        child: Container(
-          height: mediaHeight * 0.25,
-          width: mediaWidth * 0.15,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: Colors.grey,
-            image: const DecorationImage(
-              image: AssetImage(AssetsData.test2),
-              fit: BoxFit.fill,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

@@ -11,12 +11,12 @@ class FeaturedBooksCubit extends Cubit<FeaturedBooksState> {
   FeaturedBooksCubit(this.homeRepo) : super(FeaturedBooksInitial());
   final HomeRepo homeRepo;
    List<ModelBook>books =[];
- Future<void> getFeatureBooks() async {
+ Future<void> getFeatureBooks({required String category}) async {
    emit(FeaturedBooksLoading());
-    final result = await homeRepo.featchFeatureBooks();
+    final result = await homeRepo.featchFeatureBooks(category: category);
     result.fold(
           (failure) {
-            FeaturedBooksFailure(failure.errMsg);
+            FeaturedBooksFailure(failure.errorMessage);
           },
           (books) {
             this.books=books;

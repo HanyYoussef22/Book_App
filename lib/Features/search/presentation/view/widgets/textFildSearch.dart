@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../../shard/styles/clors.dart';
+import '../../../../home/presentation/view_model/CubitFeaturedBooks/featured_books_cubit.dart';
 
 class TextFieldSearchBar extends StatelessWidget {
   final ValueChanged<String> onChanged;
@@ -20,7 +22,9 @@ class TextFieldSearchBar extends StatelessWidget {
           suffixIcon: Opacity(
               opacity: 0.7,
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  BlocProvider.of<FeaturedBooksCubit>(context).getFeatureBooks(category: 'Computer science');
+                },
                 icon: const Icon(FontAwesomeIcons.magnifyingGlass),
               ))),
     );

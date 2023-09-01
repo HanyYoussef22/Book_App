@@ -1,19 +1,18 @@
 import 'package:book_app/Features/home/presentation/view_model/CubitFeaturedBooks/featured_books_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../../../core/utils/appRouter.dart';
+import '../../loading/loading.dart';
 import 'customListView.dart';
-
 
 class FeaturedBooksListView extends StatelessWidget {
   const FeaturedBooksListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var MediaHight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    var MediaHight = MediaQuery.of(context).size.height;
     return BlocBuilder<FeaturedBooksCubit, FeaturedBooksState>(
       builder: (context, state) {
         if (state is FeaturedBooksSuccess) {
@@ -24,26 +23,25 @@ class FeaturedBooksListView extends StatelessWidget {
               itemCount: state.books.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                String imageUrl = state.books[index].volumeInfo.imageLinks?.thumbnail ?? '';
-                return CustomListViewItem( imagrUrl: imageUrl,); // Fixed the parameter name here
+                String imageUrl =
+                    state.books[index].volumeInfo.imageLinks?.thumbnail ?? '';
+                return GestureDetector(
+                    onTap: () {
+                      GoRouter.of(context).push(AppRouter.kBookDetiles,
+                          extra: state.books[index]);
+                    },
+                    child: CustomListViewImage(
+                      imagrUrl: imageUrl,
+                    ));
               },
             ),
           );
         } else if (state is FeaturedBooksFailure) {
-          return Center(child: Text('Error loading books')); // Show an error message
+          return Center(child: Text(state.errMAssage)); // Show an error message
         } else {
-          return AnimatedSwitcher(
-            duration: Duration(milliseconds: 300), // Adjust the duration as needed
-            child: Container(
-              key: ValueKey<bool>(false), // Needs a unique key for animation
-              color: Colors.grey, // You can set any desired color for the empty container
-            ),
-          ); // Handle any other states you might have
+          return Center(child: NewsCardSkeltonListHorzentil());
         }
       },
     );
-
   }
 }
-
-

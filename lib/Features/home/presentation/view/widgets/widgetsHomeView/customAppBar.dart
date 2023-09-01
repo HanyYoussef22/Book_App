@@ -1,10 +1,12 @@
 import 'package:book_app/core/utils/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../../core/utils/appRouter.dart';
+import '../../../view_model/CubitFeaturedBooks/featured_books_cubit.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
@@ -23,7 +25,11 @@ class CustomAppBar extends StatelessWidget {
             fit: BoxFit.contain,
           ),
           IconButton(onPressed: (){
+
             GoRouter.of(context).push(AppRouter.kSearchView);
+
+
+
           }, icon: const Icon(FontAwesomeIcons.magnifyingGlass))
         ],
       ),

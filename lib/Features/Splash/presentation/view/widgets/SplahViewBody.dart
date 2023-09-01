@@ -3,7 +3,7 @@ import 'package:book_app/core/utils/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:lottie/lottie.dart';
 
 import '../../../../../constant.dart';
 import '../../../../home/presentation/view/HomeView.dart';
@@ -35,21 +35,28 @@ class _SplahViewBodyState extends State<SplahViewBody>
   }
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return  Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+
+
+        // assetes/111.json
+         Lottie.asset('assetes/111.json'),
+
+
+
         // Image.asset(AssetsData.logo),
-        SvgPicture.asset(
-          AssetsData.logo,
-          width: 75,
-          height: 75,
-          fit: BoxFit.contain,
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        SlidingText(slidingAnimation: slidingAnimation,)
+        // SvgPicture.asset(
+        //   AssetsData.logo,
+        //   width: 75,
+        //   height: 75,
+        //   fit: BoxFit.contain,
+        // ),
+        // const SizedBox(
+        //   height: 5,
+        // ),
+        // SlidingText(slidingAnimation: slidingAnimation,)
       ],
     );
   }
@@ -60,8 +67,8 @@ class _SplahViewBodyState extends State<SplahViewBody>
     animationController.forward();
   }
   void navigateToHome(){
-    Future.delayed(Duration(seconds: 2), (){
-      GoRouter.of(context).push(AppRouter.kHomeScreen);
+    Future.delayed(Duration(seconds: 5), (){
+      GoRouter.of(context).push(AppRouter.kCategory);
     });
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../../core/utils/styles.dart';
 import 'ItemBestSeller.dart';
+import 'bestSellerListView.dart';
 import 'customAppBar.dart';
 import 'featherListView.dart';
 
@@ -12,6 +13,7 @@ class HomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  const CustomScrollView(
+      physics: BouncingScrollPhysics(),
       slivers: [
         SliverToBoxAdapter(
           child: Column(
@@ -28,12 +30,12 @@ class HomeBody extends StatelessWidget {
             Padding(
               padding:EdgeInsets.only(left: 15.0),
               child: Text(
-                "Best Seller",
+                "News Books",
                 style: Styles.titleStyle18,
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
 
           ]
@@ -43,33 +45,6 @@ class HomeBody extends StatelessWidget {
         )
 
     ],
-    );
-  }
-}
-class BestSellerListView extends StatelessWidget {
-  const BestSellerListView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        GoRouter.of(context).push(AppRouter.kBookDetiles);
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(left: 15.0),
-        child: ListView.builder(
-          // shrinkWrap: true,//rebiled widget
-          physics: const NeverScrollableScrollPhysics(),
-          padding:EdgeInsets.zero ,
-            itemCount: 10,
-            itemBuilder: (context,index)
-        {
-          return const Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: ItemBustSeller(),
-          );
-        }),
-      ),
     );
   }
 }

@@ -29,13 +29,14 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
             create: (context) =>
-                FeaturedBooksCubit(getIt.get<HomeRepoImplement>())..getFeatureBooks()
+                FeaturedBooksCubit(getIt.get<HomeRepoImplement>())..getFeatureBooks(category: 'programing')
         ),
         BlocProvider(
             create: (context) =>
-                NewsBookCubit(getIt.get<HomeRepoImplement>()))
+                NewsBookCubit(getIt.get<HomeRepoImplement>())..getBestSellerBooks(category: 'computer sience'))
       ],
       child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         routerConfig: AppRouter.router,
         theme: ThemeData.dark().copyWith(
             scaffoldBackgroundColor: mainBackgroundColor,
