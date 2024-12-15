@@ -10,7 +10,9 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'Features/Splash/presentation/view/SplashView.dart';
+import 'Features/home/presentation/view/bookDetils.dart';
 import 'Features/home/presentation/view_model/CubitNewsBooks/news_book_cubit.dart';
+import 'Features/home/presentation/view_model/CubitSimulir/similar_books_cubit.dart';
 import 'core/utils/api_service.dart';
 import 'core/utils/appRouter.dart';
 
@@ -30,6 +32,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 FeaturedBooksCubit(getIt.get<HomeRepoImplement>())..getFeatureBooks(category: 'programing')
+        ),
+        BlocProvider(
+          create: (context) => SimilarBooksCubit(getIt.get<HomeRepoImplement>()),
+
         ),
         BlocProvider(
             create: (context) =>

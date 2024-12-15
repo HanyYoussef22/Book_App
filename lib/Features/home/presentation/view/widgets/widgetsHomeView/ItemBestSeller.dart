@@ -1,10 +1,12 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../../core/utils/appRouter.dart';
 import '../../../../../../core/utils/styles.dart';
 import '../../../../data/model/book_model/book_model.dart';
+import '../../../view_model/CubitSimulir/similar_books_cubit.dart';
 import '../secationRate.dart';
 import 'customListView.dart';
 
@@ -21,6 +23,7 @@ class ItemBustSeller extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         GoRouter.of(context).push(AppRouter.kBookDetiles, extra: books);
+        BlocProvider.of<SimilarBooksCubit>(context).getSimilarBooks(category:books.volumeInfo.categories![0]);
       },
       child: SizedBox(
         height: 120,

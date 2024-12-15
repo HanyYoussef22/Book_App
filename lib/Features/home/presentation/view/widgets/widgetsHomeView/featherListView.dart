@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../../core/utils/appRouter.dart';
+import '../../../view_model/CubitSimulir/similar_books_cubit.dart';
 import '../../loading/loading.dart';
 import 'customListView.dart';
 
@@ -29,6 +30,7 @@ class FeaturedBooksListView extends StatelessWidget {
                     onTap: () {
                       GoRouter.of(context).push(AppRouter.kBookDetiles,
                           extra: state.books[index]);
+                      BlocProvider.of<SimilarBooksCubit>(context).getSimilarBooks(category:state.books[index].volumeInfo.categories![0]);
                     },
                     child: CustomListViewImage(
                       imagrUrl: imageUrl,
